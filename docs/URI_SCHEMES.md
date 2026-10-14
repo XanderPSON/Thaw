@@ -327,6 +327,21 @@ open "thaw://set?key=showOnHover&value=true&bundleId=com.apple.Terminal"
 
 The `bundleId` parameter is stripped/ignored in release builds. Remove it in production scripts.
 
+### Moving an Item
+
+`thaw://move-item` puts one menu bar item in a section, the same move as Layout settings and the search panel's Move to. It passes the same feature toggle and whitelist as `thaw://set`.
+
+| URL | Parameters | Description |
+| --- | ---------- | ----------- |
+| `thaw://move-item` | `bundle` or `item-id`, and `section` | Moves an item to `visible`, `hidden` or `always-hidden` |
+
+Give exactly one of `bundle` (the app must own exactly one item) or `item-id` (an `id` from `list-items`, percent-encoded). The request is logged and fire-and-forget: a missing item, an item Thaw cannot place in that section, or a turned-off section is reported as a warning in Thaw's diagnostic log, not in a response.
+
+```bash
+open "thaw://move-item?bundle=com.example.app&section=hidden"
+thawctl move-item --item-id "com.example.app:Item-0" --section always-hidden
+```
+
 ### Launcher Operations
 
 Four operations let a launcher list and drive menu bar items and profiles. The launcher queries, ranks, and picks an identifier; Thaw resolves it, acts, and reports the outcome. They pass the same feature toggle and whitelist as the settings URLs, and take the same `callback`, `broadcast`, and `requestId` parameters as `thaw://get`.

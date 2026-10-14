@@ -76,6 +76,15 @@ The shared [contribution guidelines](https://github.com/thaw-app/.github/blob/ma
 5. **Translations go through [Crowdin](https://crowdin.com/project/thaw),** not translation PRs. Changing or adding the source strings a feature needs is fine.
 6. **Review AI-generated changes before you submit them.** The contributor stays responsible for understanding the code, where it came from, its license compatibility and its tests.
 
+## Agent control
+
+Commands a script or AI agent can send to a running Thaw are `thaw://` URLs with a `thawctl` command on top. To add one, touch these four places:
+
+1. The logic goes in its own file under `Thaw/System/`, with a pure parser that has tests and a small `@MainActor` performer. `ItemPlacementURI.swift` (`thaw://move-item`) is the pattern.
+2. `AppDelegate.handleURL` lists the host in the settings-class host list and in the `handleSettingsURL` switch, which puts it behind the same authorization. The switch case is one line that forwards to the new type.
+3. The `Command.all` table in `ThawCtl/Sources/ThawCtlCLI/main.swift` gets a matching command.
+4. `docs/URI_SCHEMES.md` documents it, and `CHANGELOG.md` gets a user-facing line.
+
 ## Reporting your work
 
 - Keep each PR focused. Follow the issue-linking requirements above.
