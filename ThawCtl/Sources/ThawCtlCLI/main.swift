@@ -40,6 +40,7 @@ private struct Command {
         Command(name: "get", host: "get", valueParams: ["key"], flagParams: ["display"], usage: "thawctl get <key> [--display <uuid>]", needsAuth: true),
         Command(name: "authorize", host: "authorize", valueParams: [], flagParams: [], usage: "thawctl authorize", needsAuth: false),
         Command(name: "reveal-item", host: "reveal-item", valueParams: [], flagParams: ["bundle", "item-id"], usage: "thawctl reveal-item (--bundle <id> | --item-id <id>)", needsAuth: true),
+        Command(name: "move-item", host: "move-item", valueParams: [], flagParams: ["bundle", "item-id", "section"], usage: "thawctl move-item (--bundle <id> | --item-id <id>) --section <visible|hidden|always-hidden>", needsAuth: true),
     ]
 }
 
