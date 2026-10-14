@@ -125,7 +125,7 @@ struct SettingsURIDispatchInventoryTests {
 
         // Each mutating action must be handed the bundle id the gate approved.
         // A call passing anything else is a route around the check.
-        for action in ["handleSetURL", "handleToggleURL", "handleRevealItemURL", "handleLauncherURL"] {
+        for action in ["handleSetURL", "handleToggleURL", "handleRevealItemURL", "ItemPlacementURI.handle", "handleLauncherURL"] {
             let calls = dispatch.filter { $0.contains("\(action)(") && !$0.contains("func \(action)(") }
             #expect(calls.count == 1, "Expected exactly one \(action) call in handleSettingsURL, found \(calls.count)")
             for call in calls {

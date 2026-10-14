@@ -288,7 +288,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
 
         switch host {
-        case "set", "toggle", "get", "authorize", "reveal-item",
+        case "set", "toggle", "get", "authorize", "reveal-item", "move-item",
              "list-items", "activate-item", "list-profiles", "apply-profile", "get-appearance":
             handleSettingsURL(url, host: host, senderBundleId: senderBundleId)
             return
@@ -409,6 +409,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             handleGetURL(url, sender: effectiveBundleId)
         case "reveal-item":
             handleRevealItemURL(url, sender: effectiveBundleId)
+        case "move-item":
+            ItemPlacementURI.handle(url, sender: effectiveBundleId, appState: appState)
         case "list-items", "activate-item", "list-profiles", "apply-profile", "get-appearance":
             handleLauncherURL(url, sender: effectiveBundleId)
         default:
