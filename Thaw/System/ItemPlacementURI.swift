@@ -77,12 +77,21 @@ enum ItemPlacementURI {
             return
         }
 
+        // The controller only tracks items placed away from Visible, so add every managed item as Visible first.
+        var known = Dictionary(
+            appState.itemManager.managedItems.map {
+                (MenuBarItemTag.canonicalPersistentIdentifier($0.uniqueIdentifier), MenuBarSectionName.visible)
+            },
+            uniquingKeysWith: { first, _ in first }
+        )
+        known.merge(controller.sectionAssignment) { _, assigned in assigned }
+
         let request: ItemPlacementRequest
         switch ItemPlacementRequest.parse(
             bundle: value("bundle"),
             itemID: value("item-id"),
             section: value("section"),
-            sectionAssignment: controller.sectionAssignment
+            sectionAssignment: known
         ) {
         case let .success(parsed):
             request = parsed
